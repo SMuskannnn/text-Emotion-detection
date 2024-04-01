@@ -37,7 +37,7 @@ def preprocess_data(df):
 # Load and preprocess the data
 @st.cache
 def load_data():
-    df = pd.read_csv('ISEAR.csv', header=None)
+    df = pd.read_csv('data.csv', header=None)
     df = df.dropna()
     df.columns = ['Emotion', 'Text']
     return preprocess_data(df)
