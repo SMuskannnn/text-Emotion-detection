@@ -37,10 +37,16 @@ def preprocess_data(df):
 # Load and preprocess the data
 @st.cache
 def load_data():
-    df = pd.read_csv('data.csv', header=None)
-    df = df.dropna()
-    df.columns = ['Emotion', 'Text']
-    return preprocess_data(df)
+    try:
+        df = pd.read_csv('data.csv', header=None)
+        col = [0, 1]
+        new_df = df[col].copy()  # Create a copy to avoid modifying the original DataFrame
+        new_df = new_df[pd.notnull(new_df[1])]
+        new_df.columns = ['Emotion', 'Text']
+        return preprocess_data(new_df)
+    except Exception as e:
+        st.error("Error loading data: {}".format(str(e)))
+        return None
 
 # Function to return tokenized list for vectorization
 def return_phrase(input_list):
